@@ -21,8 +21,8 @@ import static org.hibernate.internal.util.collections.ArrayHelper.forEach;
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final WebClient webClient;
-    public OrderService(OrderRepository orderRepository, WebClient webClient) {
+    private final WebClient.Builder webClient;
+    public OrderService(OrderRepository orderRepository, WebClient.Builder webClient) {
         this.orderRepository = orderRepository;
         this.webClient = webClient;
     }
@@ -54,7 +54,7 @@ public class OrderService {
         //let's call inventory service and check if the product is Available currently
         List<String> skuCodes = orderItemsList.stream().map(OrderItems::getSkuCode).toList();
 
-        InventoryResponse[] res = webClient.get()
+        InventoryResponse[] res = webClient.build().get()
                 .uri("http://localhost:8082/api/inventory",uriBuilder -> uriBuilder.queryParam("skuCode",skuCodes).build())
                 .retrieve()
                 .bodyToMono(InventoryResponse[].class)
@@ -86,10 +86,11 @@ order.setOrderItems(orderItemsList);
 
     public void CreateOrder2(OrderRequest orderRequest) {
         Order order = Order.builder().build();
+        System.out.println(orderRequest.getOrderItems().get(0));
         List<String> skuCodes = orderRequest.getOrderItems().stream()
                 .map(OrderItemDTO::getSkuCode).toList();
-        InventoryResponse [] inventoryResponse = webClient.get()
-                .uri("http://localhost:8082/api/inventory",uriBuilder -> uriBuilder.queryParam("skuCode",skuCodes).build())
+        InventoryResponse [] inventoryResponse = webClient.build().get()
+                .uri("http://inventory-service/api/inventory",uriBuilder -> uriBuilder.queryParam("skuCode",skuCodes).build())
                 .retrieve()
                 .bodyToMono(InventoryResponse[].class)
                 .block();

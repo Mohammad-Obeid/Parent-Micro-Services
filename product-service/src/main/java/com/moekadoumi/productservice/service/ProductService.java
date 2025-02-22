@@ -1,9 +1,10 @@
-package com.moekadoumi.productservice.src.main.service;
+package com.moekadoumi.productservice.service;
 
-import com.example.youtCourse.dto.ProductResponse;
-import com.example.youtCourse.dto.RequestProduct;
-import com.example.youtCourse.model.Product;
-import com.example.youtCourse.repository.ProductRepository;
+
+import com.moekadoumi.productservice.dto.ProductResponse;
+import com.moekadoumi.productservice.dto.RequestProduct;
+import com.moekadoumi.productservice.model.Product;
+import com.moekadoumi.productservice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +28,15 @@ public class ProductService {
                 description(reqproduct.getDescription()).
                 price(reqproduct.getPrice()).build();
     }
-    public void createProduct(RequestProduct product) {
+    public ProductResponse createProduct(RequestProduct product) {
         Product newProduct = mapToProduct(product);
         productRepository.save(newProduct);
+        return ProductResponse.builder()
+                .id(newProduct.getId())
+                .name(newProduct.getName())
+                .price(newProduct.getPrice())
+                .description(newProduct.getDescription())
+                .build();
     }
 
     public List<ProductResponse> returnProducts() {

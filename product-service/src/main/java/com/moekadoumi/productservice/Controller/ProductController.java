@@ -1,8 +1,8 @@
-package com.moekadoumi.productservice.src.main.Controller;
+package com.moekadoumi.productservice.Controller;
 
-import com.example.youtCourse.dto.ProductResponse;
-import com.example.youtCourse.dto.RequestProduct;
-import com.example.youtCourse.service.ProductService;
+import com.moekadoumi.productservice.dto.ProductResponse;
+import com.moekadoumi.productservice.dto.RequestProduct;
+import com.moekadoumi.productservice.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +22,8 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void createProduct(@Valid @RequestBody RequestProduct requestProduct) {
-        productService.createProduct(requestProduct);
+    public ProductResponse createProduct(@Valid @RequestBody RequestProduct requestProduct) {
+        return productService.createProduct(requestProduct);
     }
 
     @GetMapping("")

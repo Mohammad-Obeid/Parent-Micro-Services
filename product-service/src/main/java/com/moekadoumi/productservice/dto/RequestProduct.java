@@ -1,4 +1,4 @@
-package com.moekadoumi.productservice.src.main.dto;
+package com.moekadoumi.productservice.dto;
 
 import lombok.*;
 

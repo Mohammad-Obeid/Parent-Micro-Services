@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,10 +19,11 @@ public class InventoryService {
 
     @Transactional
     public List<InventoryResponse> isInStock(List<String> skuCode) {
-        return inventoryRepository.findBySkuCodeIn(skuCode).stream()
+        Optional<List<InventoryResponse>> invs = Optional.of(inventoryRepository.findBySkuCodeIn(skuCode).stream()
                 .map(inventory -> InventoryResponse.builder()
-                        .available(inventory.getQuantity()>0)
+                        .available(inventory.getQuantity() > 0)
                         .skuCode(inventory.getSkuCode())
-                        .build()).toList();
+                        .build()).toList());
+        return invs.get();
     }
 }

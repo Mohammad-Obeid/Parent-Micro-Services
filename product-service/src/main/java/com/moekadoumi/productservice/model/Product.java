@@ -1,4 +1,4 @@
-package com.moekadoumi.productservice.src.main.model;
+package com.moekadoumi.productservice.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

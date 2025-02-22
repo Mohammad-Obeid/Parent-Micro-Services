@@ -1,6 +1,6 @@
-package com.moekadoumi.productservice.src.main.repository;
+package com.moekadoumi.productservice.repository;
 
-import com.example.youtCourse.model.Product;
+import com.moekadoumi.productservice.model.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
